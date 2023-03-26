@@ -3,42 +3,22 @@ import { ref } from 'vue'
 import StudentDetail from './components/student-detail.vue'
 import mockStudent from '@/mock/mock-student'
 import type { Student } from '@/types/student'
+import useStudentDetail from '@/views/hooks/composition/use-student-detail'
 
 const studentList = ref<Student[]>(mockStudent)
-
-const showDetail = ref(false)
-const isForDetail = ref(false)
-const editStudent = ref<Student>()
-
-const toEdit = (stu?: Student, isDetail = false) => {
-  showDetail.value = true
-  editStudent.value = stu
-  isForDetail.value = isDetail
-}
-
-const handleStudentSave = (stu: Student) => {
-  // 如果 editStudent 中的 id 不为空，则为编辑，否则为新增
-  if (stu.id != null) {
-    const existIndex = studentList.value.findIndex(es => es.id === stu.id)
-    if (existIndex >= 0) {
-      studentList.value[existIndex] = {
-        ...stu,
-      }
-    }
-  }
-  else {
-    studentList.value.push({
-      ...stu,
-      id: studentList.value.length,
-    })
-  }
-}
+const {
+  showDetail,
+  isForDetail,
+  editStudent,
+  toEdit,
+  handleStudentSave,
+} = useStudentDetail(studentList)
 </script>
 
 <template>
   <div class="student-list">
     <div class="header">
-      学生列表/状态驱动
+      学生列表/hooks
 
       <el-button type="primary" @click="toEdit()">
         新增学生
@@ -64,7 +44,12 @@ const handleStudentSave = (stu: Student) => {
       </div>
     </div>
 
-    <StudentDetail v-model="showDetail" :edit-student="editStudent" :is-for-detail="isForDetail" @save="handleStudentSave" />
+    <StudentDetail
+      v-model="showDetail"
+      :is-for-detail="isForDetail"
+      :edit-student="editStudent"
+      @save="handleStudentSave"
+    />
   </div>
 </template>
 
