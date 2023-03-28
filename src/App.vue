@@ -1,13 +1,16 @@
 <script lang="ts" setup>
 // import NormalStyle from './views/normal'
-import HookStyle from './views/hooks'
+// import HookStyle from './views/hooks'
+import HookComponentStyle from './views/hooks-return-component'
 </script>
 
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
 
   <!--  <NormalStyle /> -->
-  <HookStyle />
+  <!--  <HookStyle /> -->
+
+  <HookComponentStyle />
 </template>
 
 <style>
