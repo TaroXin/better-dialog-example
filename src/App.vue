@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 // import NormalStyle from './views/normal'
 // import HookStyle from './views/hooks'
-import HookComponentStyle from './views/hooks-return-component'
+// import HookComponentStyle from './views/hooks-return-component'
+import InstanceStyle from './views/instance'
 </script>
 
 <template>
@@ -10,7 +11,8 @@ import HookComponentStyle from './views/hooks-return-component'
   <!--  <NormalStyle /> -->
   <!--  <HookStyle /> -->
 
-  <HookComponentStyle />
+  <!--  <HookComponentStyle /> -->
+  <InstanceStyle />
 </template>
 
 <style>
