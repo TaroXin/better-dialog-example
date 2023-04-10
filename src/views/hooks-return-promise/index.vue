@@ -1,13 +1,14 @@
 <script setup lang="ts">
-import { getCurrentInstance, ref } from 'vue'
-import StudentDetail from './components/student-detail-instance'
+import { ref } from 'vue'
+import useStudentDetail from './composition/use-student-detail'
 import mockStudent from '@/mock/mock-student'
 import type { Student } from '@/types/student'
-const instance = getCurrentInstance()
 
 const studentList = ref<Student[]>(mockStudent)
+const StudentDetail = useStudentDetail()
+
 async function toEdit(stu?: Student, isDetail = false) {
-  const editedStudent = await StudentDetail.toEdit(stu, isDetail, instance!.appContext)
+  const editedStudent = await StudentDetail.toEdit(stu, isDetail)
   // 如果 editStudent 中的 id 不为空，则为编辑，否则为新增
   if (editedStudent?.id != null) {
     const existIndex = studentList.value.findIndex(es => es.id === editedStudent.id)
@@ -29,7 +30,7 @@ async function toEdit(stu?: Student, isDetail = false) {
 <template>
   <div class="student-list">
     <div class="header">
-      学生列表/instance
+      学生列表/hooks-return-promise
 
       <el-button type="primary" @click="toEdit()">
         新增学生
@@ -54,6 +55,8 @@ async function toEdit(stu?: Student, isDetail = false) {
         </div>
       </div>
     </div>
+
+    <StudentDetail />
   </div>
 </template>
 

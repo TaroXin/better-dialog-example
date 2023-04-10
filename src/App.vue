@@ -2,7 +2,8 @@
 // import NormalStyle from './views/normal'
 // import HookStyle from './views/hooks'
 // import HookComponentStyle from './views/hooks-return-component'
-import InstanceStyle from './views/instance'
+// import InstanceStyle from './views/instance'
+import HookPromise from './views/hooks-return-promise'
 </script>
 
 <template>
@@ -12,7 +13,9 @@ import InstanceStyle from './views/instance'
   <!--  <HookStyle /> -->
 
   <!--  <HookComponentStyle /> -->
-  <InstanceStyle />
+  <!--  <InstanceStyle /> -->
+
+  <HookPromise />
 </template>
 
 <style>

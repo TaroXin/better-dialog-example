@@ -1,28 +1,36 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import type { PropType } from 'vue'
+import { ref, watch } from 'vue'
 import type { Student } from '@/types/student'
 
-const emit = defineEmits(['save'])
-const showDialog = ref(false)
+const props = defineProps({
+  editStudent: {
+    type: Object as PropType<Student>,
+  },
+  isForDetail: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const emit = defineEmits(['update:modelValue', 'save'])
+
 const student = ref<Student>({})
-const isForDetail = ref(false)
+watch(() => props.editStudent, (newVal) => {
+  if (newVal)
+    student.value = { ...props.editStudent } as Student
+  else
+    student.value = {}
+})
 
 function saveStudent() {
   emit('save', student.value)
-  showDialog.value = false
+  emit('update:modelValue', false)
 }
-
-defineExpose({
-  open: (stu: Student, isDetail = false) => {
-    showDialog.value = true
-    student.value = { ...stu }
-    isForDetail.value = isDetail
-  },
-})
 </script>
 
 <template>
-  <el-dialog v-model="showDialog" append-to-body width="500px" title="学生信息">
+  <el-dialog append-to-body width="500px" title="学生信息" v-bind="$attrs">
     <el-form label-width="80px" label-position="left" :disabled="isForDetail">
       <el-form-item label="姓名">
         <el-input v-model="student.name" placeholder="请输入学生姓名" />
@@ -46,7 +54,7 @@ defineExpose({
       <el-button type="primary" @click="saveStudent">
         保存
       </el-button>
-      <el-button type="primary" plain @click="showDialog = false">
+      <el-button type="primary" plain @click="emit('update:modelValue', false)">
         取消
       </el-button>
     </template>
